@@ -1,0 +1,268 @@
+{
+  "tests": [
+    {
+      "name": "`emoji_favorite` returns a valid emoji",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_favorite` returns a valid emoji'",
+      "comparison": "included",
+      "timeout": 0.5,
+      "points": 3
+    },
+    {
+      "name": "`emoji_count` counts one emoji",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_count` counts one emoji'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_count` counts multiple emoji",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_count` counts multiple emoji'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_count` returns zero with no emojis",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_count` returns zero with no emojis'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_count` correctly detects UTF-8 non-emojis",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_count` correctly detects UTF-8 non-emojis'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_count` correctly detects UTF-8 non-emojis with wrong encoding",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_count` correctly detects UTF-8 non-emojis with wrong encoding'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_count` correctly detects UTF-8 emojis with different UTF-8 bytes",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_count` correctly detects UTF-8 emojis with different UTF-8 bytes'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_invertChar` inverts smiley face into another emoji",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_invertChar` inverts smiley face into another emoji'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_invertChar` inverts at least six total emojis",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_invertChar` inverts at least six total emojis'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_invertChar` does not invert string with no emoji",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_invertChar` does not invert string with no emoji'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_invertAll` inverts a string of emojis",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_invertAll` inverts a string of emojis'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_random_alloc` allocates new memory",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_random_alloc` allocates new memory'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_random_alloc` allocates valid emoji",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_random_alloc` allocates valid emoji'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_random_alloc` allocates random emoji",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_random_alloc` allocates random emoji'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_invertFile_alloc` inverts all smiley faces - short text",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_invertFile_alloc` inverts all smiley faces - short text'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_invertFile_alloc` inverts all smiley faces - long text",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_invertFile_alloc` inverts all smiley faces - long text'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_count` counts no emoji",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_count` counts no emoji'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_invertFile_alloc` inverts all emojis - no emoji in text",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_invertFile_alloc` inverts all emojis - no emoji in text'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "`emoji_invertFile_alloc` invalid file name",
+      "setup": "make test",
+      "run": "./test -w NoTests '`emoji_invertFile_alloc` invalid file name'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate - translation works with an empty emoji_t",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate - translation works with an empty emoji_t'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate - translation with one translation",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate - translation with one translation'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate - translation with two translations",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate - translation with two translations'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate - translation with text in between emojis",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate - translation with text in between emojis'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate - translation with only one emoji result is a shorter string",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate - translation with only one emoji result is a shorter string'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate - translation with one emoji result is a longer string",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate - translation with one emoji result is a longer string'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate - translation to an empty string",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate - translation to an empty string'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate - translation with tiebreaks in translation",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate - translation with tiebreaks in translation'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate - translation with tiebreaks (reverse order)",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate - translation with tiebreaks (reverse order)'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate - translation with nested tiebreaks",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate - translation with nested tiebreaks'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate - translation with nested tiebreaks (more tests)",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate - translation with nested tiebreaks (more tests)'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate - translation works with empty emoji_t and long text",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate - translation works with empty emoji_t and long text'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate - translation works with empty emoji_t and short text",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate - translation works with empty emoji_t and short text'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "translate long text - translation with many translations",
+      "setup": "make test",
+      "run": "./test -w NoTests 'translate long text - translation with many translations'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 4
+    }
+  ]
+}
