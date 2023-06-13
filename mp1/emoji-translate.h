@@ -4,17 +4,6 @@
 extern "C" {
 #endif
 
-/*typedef struct _emoji_indi {
-    char *source;
-    char *translation;
-} emoji_indi;
-
-typedef struct _emoji_t {
-    emoji_indi *emoji_array;
-    size_t size;
-} emoji_t;*/
-
-
 typedef struct _emoji_indi {
     char *source;
     char *translation;
