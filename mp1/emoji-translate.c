@@ -8,33 +8,43 @@
 
 void emoji_init(emoji_t *emoji) {
  
-  emoji->emoji_array = malloc(sizeof(emoji_t) * 20);
+  emoji->head = malloc(sizeof(emoji_indi));
+  char *sentinel = "sentinel";
+  emoji->head->source = (char*) calloc(strlen(sentinel) + 1, sizeof(char));
+  emoji->head->translation= (char*) calloc(strlen(sentinel) + 1, sizeof(char));
+  strcpy(emoji->head->source, sentinel);
+  strcpy(emoji->head->source + strlen(sentinel), "\0");
+  strcpy(emoji->head->translation, sentinel);
+  strcpy(emoji->head->translation + strlen(sentinel), "\0");
+  emoji->head->next = NULL;
 
-  emoji->size = 0;
   return;
 }
 
 void emoji_add_translation(emoji_t *emoji, const unsigned char *source, const unsigned char *translation) {
 
-  emoji->emoji_array[emoji->size].source = (char*) calloc((strlen(source) + 1),sizeof(char));
-  emoji->emoji_array[emoji->size].translation = (char*) calloc((strlen(translation) + 1),sizeof(char));
-  strcpy(emoji->emoji_array[emoji->size].source, source);
-  strcpy(emoji->emoji_array[emoji->size].source + strlen(source), "\0");
-  strcpy(emoji->emoji_array[emoji->size].translation, translation);
-  strcpy(emoji->emoji_array[emoji->size].translation + strlen(translation), "\0");
-  emoji->size = emoji->size + 1;
+  emoji_indi *toAdd = malloc(sizeof(emoji_indi));
+  toAdd->source = (char*) calloc((strlen(source) + 1),sizeof(char));
+  toAdd->translation = (char*) calloc((strlen(translation) + 1),sizeof(char));
+  strcpy(toAdd->source, source);
+  strcpy(toAdd->source + strlen(source), "\0");
+  strcpy(toAdd->translation, translation);
+  strcpy(toAdd->translation + strlen(translation), "\0");
+ 
+  toAdd->next = emoji->head;
+  emoji->head = toAdd;
   
   return;
 }
 
 char *find_translation(emoji_t * emoji, char *toInspect) {
  
-  for (size_t i = 0; i < emoji->size; i++) {
-    
-    if (strcmp(emoji->emoji_array[i].source, toInspect) == 0) {
-      
-      return emoji->emoji_array[i].translation;
+  emoji_indi *temp = emoji->head;
+  while(temp != NULL) {
+    if (strcmp(temp->source, toInspect) == 0) {
+      return temp->translation;
     }
+    temp = temp->next;
   }
 
   return "no translation available";
@@ -68,7 +78,7 @@ const unsigned char *emoji_translate_file_alloc(emoji_t *emoji, const char *file
   size_t length = strlen(originalFile);
   
   char* toReturn = (char *)calloc((length + 1)*10 , sizeof(char));
-
+  //char* toReturn = (char *)malloc(sizeof(FILE));
   size_t toReturnLength = 0;
 
   while (length - index >= 4) {
@@ -147,12 +157,14 @@ const unsigned char *emoji_translate_file_alloc(emoji_t *emoji, const char *file
 
 void emoji_destroy(emoji_t *emoji) {
  
-  if (emoji->size > 0) {
-    for(size_t i = 0; i < emoji->size; i++) {
-      free(emoji->emoji_array[i].source);
-      free(emoji->emoji_array[i].translation);
-    }
+  emoji_indi *current = emoji->head;
+  while(current != NULL) {
+    emoji_indi *temp = current;
+    current = temp->next;
+    free(temp->source);
+    free(temp->translation);
+    free(temp);
+    
   }
-  free(emoji->emoji_array);
   return;
 }
