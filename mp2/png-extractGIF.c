@@ -7,10 +7,6 @@ int png_extractGIF(const char *png_filename, const char *gif_filename) {
   printf("PNG Header: OK\n");  
 
   int getGif = 0;
-  //size_t gifLeft = 0;
-  //size_t gifRight = 0;
-  //size_t leftPtr = 8;
-  //size_t rightPtr = 8;
   // Read chunks until reaching "IEND" or an invalid chunk;
   int chunk_Counter = 0;
   while (1) {
@@ -22,10 +18,6 @@ int png_extractGIF(const char *png_filename, const char *gif_filename) {
       return ERROR_INVALID_CHUNK_DATA;
     }
     chunk_Counter = chunk_Counter + 1;
-
-  
-    //rightPtr = png->index;
-
 
     // Report data about the chunk to the command line:
     printf("Chunk: %s (%d bytes of data)\n", chunk.type, chunk.len);
@@ -42,10 +34,8 @@ int png_extractGIF(const char *png_filename, const char *gif_filename) {
       fwrite(chunk.data, 1, chunk.len, fp);
       fclose(fp);
     }
-
     // Free the memory associated with the chunk we just read:
     PNG_free_chunk(&chunk);
-
   }
 
   PNG_close(png);

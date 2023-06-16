@@ -11,7 +11,6 @@ int png_hideGIF(const char *png_filename_source, const char *gif_filename, const
   size_t bytesWritten;
   int written = 0;
 
-
   // Read chunks until reaching "IEND" or in invalid chunk:
   while (1) {
     // Read chunk and ensure we get a valid result (exit on error):
@@ -64,14 +63,11 @@ int png_hideGIF(const char *png_filename_source, const char *gif_filename, const
         PNG_free_chunk(&gif_chunk);
       }
 
-
-
     }
 
     // Free the memory associated with the chunk we just read:
     PNG_free_chunk(&chunk);
   }
- 
 
   PNG_close(png_source);
   PNG_close(png_out);
