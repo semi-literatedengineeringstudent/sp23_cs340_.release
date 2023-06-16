@@ -1,0 +1,11 @@
+{
+  "tasks": [
+    {
+      "command": "make",
+      "args": ["test"],
+      "group": { "isDefault": true, "kind": "build" },
+      "label": "make test"
+    },
+  ],
+  "version": "2.0.0"
+}
