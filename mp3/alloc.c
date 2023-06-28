@@ -101,30 +101,23 @@ void coalesce(metadata_entry_t *prev_node, metadata_entry_t *current_node, metad
 
   if (coalesce_prev == 0 && coalesce_next == 0) {
     // if current node cannot coalesce with both prev and next node.
-    //printf("%s", "coalesce with neither pre nor next node in heap\n");
-    
     add_to_free_list(current_node);
   } else if (coalesce_prev == 1 && coalesce_next == 0) {
     // can coalesce with prev node;
-    //printf("%s", "coalesce with prev node but not next node in heap\n");
     delete_from_free_list(prev_node);
     prev_node->capacity = prev_node->capacity + sizeof(boundary_tag) + 
     sizeof(metadata_entry_t) + current_node->capacity;
     boundary_tag *new_Btag = (boundary_tag *)((unsigned long)prev_node + sizeof(metadata_entry_t) + prev_node->capacity);
     new_Btag->capacity = prev_node->capacity;
-   
     add_to_free_list(prev_node);
   } else if (coalesce_prev == 0 && coalesce_next == 1) {
-    //printf("%s", "coalesce with next node but not prev node in heap\n");
     delete_from_free_list(next_node);
     current_node->capacity = current_node->capacity + sizeof(boundary_tag) + 
     sizeof(metadata_entry_t) + next_node->capacity;
     boundary_tag *new_Btag = (boundary_tag *)((unsigned long)current_node + sizeof(metadata_entry_t) + current_node->capacity);
     new_Btag->capacity = current_node->capacity;
-    
     add_to_free_list(current_node);
   } else {
-    //printf("%s", "coalesce with both prev and next node in heap\n");
     delete_from_free_list(prev_node);
     delete_from_free_list(next_node);
     prev_node->capacity = prev_node->capacity + sizeof(boundary_tag) + 
@@ -132,56 +125,18 @@ void coalesce(metadata_entry_t *prev_node, metadata_entry_t *current_node, metad
     sizeof(metadata_entry_t) + next_node->capacity;
     boundary_tag *new_Btag = (boundary_tag *)((unsigned long)prev_node + sizeof(metadata_entry_t) + prev_node->capacity);
     new_Btag->capacity = prev_node->capacity;
-    
     add_to_free_list(prev_node);
   }
   return;
 }
 
-/*void split(metadata_entry_t * metadata_node, size_t size_to_used) {
-  //printf("capacity of node to split: %ld   size occpied by new allocation: %ld\n", metadata_node->capacity, size_to_used);
-  if (size_to_used < metadata_node->capacity && metadata_node->capacity - sizeof(metadata_entry_t) - sizeof(boundary_tag) - size_to_used > split_criterion) {
-    //printf("%s", "proceed split\n");
-    size_t new_capacity = metadata_node->capacity - sizeof(metadata_entry_t) - sizeof(boundary_tag) - size_to_used;
-    //printf("new capacity is : %ld\n", new_capacity);
-    boundary_tag *metadata_node_Btag_new = (boundary_tag *)((unsigned long)metadata_node + sizeof(metadata_entry_t) + size_to_used);
-    metadata_node_Btag_new->capacity = size_to_used;
-    metadata_node->capacity = size_to_used;
-    metadata_node->free = 0;
-
-    delete_from_free_list(metadata_node);
-    // now add the splited node into the head of linked list, give metadata node has been successfully deleted from the free list.
-    metadata_entry_t *new_node = (metadata_entry_t *)((unsigned long)metadata_node + sizeof(metadata_entry_t) + size_to_used + sizeof(boundary_tag));
-    new_node->capacity = new_capacity;
-    new_node->free = 1;
-    new_node->prev_free = NULL;
-    new_node->next_free = NULL;
-    boundary_tag *new_boundary_tag = (boundary_tag *)((unsigned long)new_node + sizeof(metadata_entry_t) + new_node->capacity);
-    new_boundary_tag->capacity = new_capacity;
-    //printf("new node has capacity: %ld\n", new_node->capacity);
-
-    //add new node to the head of the free linked list.
-    add_to_free_list(new_node);
-    return;
-
-  } else {
-    //printf("%s", "no split\n");
-    metadata_node->free = 0;
-    delete_from_free_list(metadata_node);
-    return;
-  }
-}*/
-
-
 void split(metadata_entry_t * metadata_node, size_t size_to_used) {
   if (size_to_used < metadata_node->capacity && metadata_node->capacity - sizeof(metadata_entry_t) - sizeof(boundary_tag) - size_to_used > split_criterion) {
-    //printf("%s", "proceed split\n");
     size_t new_capacity = metadata_node->capacity - sizeof(metadata_entry_t) - sizeof(boundary_tag) - size_to_used;
     boundary_tag *metadata_node_Btag_new = (boundary_tag *)((unsigned long)metadata_node + sizeof(metadata_entry_t) + size_to_used);
     metadata_node_Btag_new->capacity = size_to_used;
     metadata_node->capacity = size_to_used;
     metadata_node->free = 0;
-
     delete_from_free_list(metadata_node);
     // now add the splited node into the head of linked list, give metadata node has been successfully deleted from the free list.
     metadata_entry_t *new_node = (metadata_entry_t *)((unsigned long)metadata_node + sizeof(metadata_entry_t) + size_to_used + sizeof(boundary_tag));
@@ -191,13 +146,9 @@ void split(metadata_entry_t * metadata_node, size_t size_to_used) {
     new_node->next_free = NULL;
     boundary_tag *new_boundary_tag = (boundary_tag *)((unsigned long)new_node + sizeof(metadata_entry_t) + new_node->capacity);
     new_boundary_tag->capacity = new_capacity;
-
     free((void *)((unsigned long) new_node + sizeof(metadata_entry_t)));
-    
     return;
-
   } else {
-    //printf("%s", "no split\n");
     metadata_node->free = 0;
     delete_from_free_list(metadata_node);
     return;
@@ -270,11 +221,8 @@ void *malloc(size_t size) {
   metadata_entry_t *chosen = NULL;
   if (heap_bottom == NULL) {
     heap_bottom = sbrk(0);
-    //printf("%p", heap_bottom);
-    //printf("%s", "\n");
   }
   if(size == 0) {
-    //printf("%s", "malloc failed because requesting 0 bytes \n");
     return NULL;
   }
   while(current != NULL) {
@@ -287,16 +235,13 @@ void *malloc(size_t size) {
     }
     current = current->next_free;
   }
-
   if (chosen != NULL) {
     split(chosen, size);
-    //print_heap_stat();
     return (void *)((unsigned long)chosen + sizeof(metadata_entry_t));
   }
 
   chosen = sbrk(sizeof(metadata_entry_t) + size + sizeof(boundary_tag));
   if(chosen == (void*)-1) {
-    //printf("%s", "malloc failed \n");
     return NULL;
   }
   void *ptr = (void *)((unsigned long)chosen + sizeof(metadata_entry_t));
@@ -310,92 +255,8 @@ void *malloc(size_t size) {
   Btag->capacity = size;
 
   heap_top = (void *)((unsigned long)chosen + sizeof(metadata_entry_t) + chosen->capacity + sizeof(boundary_tag));
-  
-  //print_heap_stat();
-  //printf("%s", "malloc completed \n");
-  //printf("%s", "\n");
- 
-
-  
   return ptr;
 }
-
-/*void *malloc(size_t size) {
-  // implement malloc:
-  metadata_entry_t *current = free_list_head;
-  metadata_entry_t *chosen = NULL;
-  metadata_entry_t *last_free = NULL;
-
-  if (heap_bottom == NULL) {
-    heap_bottom = sbrk(0);
-    //printf("%p", heap_bottom);
-    //printf("%s", "\n");
-  }
-  if(size == 0) {
-    //printf("%s", "malloc failed because requesting 0 bytes \n");
-    return NULL;
-  }
-  while(current != NULL) {
-    //implement best fit to reduce internal fragmentation. 
-    //using free list, O(n) should have small n.
-    if (current->capacity >= size) {
-      if (chosen == NULL || (chosen != NULL && current->capacity < chosen->capacity)) {
-        chosen = current;
-      }
-    }
-    if((void*) ((unsigned long) current + sizeof(metadata_entry_t) + current->capacity + sizeof(boundary_tag)) == (void *)heap_top) {
-      last_free = current;
-    }
-    current = current->next_free;
-  }
-
-  if (chosen != NULL) {
-    split(chosen, size);
-    return (void *)((unsigned long)chosen + sizeof(metadata_entry_t));
-  }
-  if (last_free != NULL) {
-    if ((void*)((unsigned long) last_free + sizeof(metadata_entry_t) + last_free->capacity + sizeof(boundary_tag)) == (void *)heap_top) {
-      // if we have a free block at the top of heap
-      size_t size_to_add = size - last_free->capacity;
-      void * old_heap_top = sbrk(size_to_add);
-      heap_top = (void*) ((unsigned long) old_heap_top + size_to_add);
-      boundary_tag * new_Btag = (boundary_tag *)((unsigned long) last_free + sizeof(metadata_entry_t) + size);
-      new_Btag->capacity = size;
-      last_free->capacity = size;
-      last_free->free = 0;
-      delete_from_free_list(last_free);
-      return (void*) ((unsigned long)last_free + sizeof(metadata_entry_t));
-
-    }
-  }
-  
-
-  chosen = sbrk(sizeof(metadata_entry_t) + size + sizeof(boundary_tag));
-  if(chosen == (void*)-1) {
-    //printf("%s", "malloc failed \n");
-    return NULL;
-  }
-  void *ptr = (void *)((unsigned long)chosen + sizeof(metadata_entry_t));
-  boundary_tag *Btag = (boundary_tag*)((unsigned long)chosen + sizeof(metadata_entry_t) + size);
-  
-  chosen->capacity = size;
-  chosen->free = 0;
-  chosen->next_free = NULL;
-  chosen->prev_free = NULL;
-
-  Btag->capacity = size;
-
-  heap_top = (void *)((unsigned long)chosen + sizeof(metadata_entry_t) + chosen->capacity + sizeof(boundary_tag));
-  
-  //print_heap_stat();
-  //printf("%s", "malloc completed \n");
-  //printf("%s", "\n");
- 
-
-  
-  return ptr;
-}*/
-
 
 /**
  * Deallocate space in memory
@@ -433,26 +294,8 @@ void free(void *ptr) {
   if ((void *)((unsigned long)current_node + sizeof(metadata_entry_t) + current_node->capacity + sizeof(boundary_tag)) < (void *)heap_top){
     next_node = (metadata_entry_t *)((unsigned long)current_node + sizeof(metadata_entry_t) + current_node->capacity + sizeof(boundary_tag));
   }
-  /*
-  if(prev_node == NULL) {
-    printf("%s", "prev node is null\n");
-    
-  } else {
-    printf("%s", "prev node is not null\n");
-    printf("metadata for prev node %p: (%p, size=%ld, isFreed=%d)\n", (void *)prev_node + sizeof(metadata_entry_t), prev_node, prev_node->capacity, prev_node->free);
-  }
-  if(next_node == NULL) {
-    printf("%s", "next node is null\n");
-  } else {
-    printf("%s", "next node is not null\n");
-    printf("metadata for next node %p: (%p, size=%ld, isFreed=%d)\n", (void *)next_node + sizeof(metadata_entry_t), next_node, next_node->capacity, next_node->free);
-  }*/
   coalesce(prev_node, current_node, next_node);
   
-  //print_heap_stat();
-  //printf("%s", "free completed \n");
-  //printf("%s", "\n");
-
   return;
 }
 
@@ -517,7 +360,6 @@ void *realloc(void *ptr, size_t size) {
     free(ptr);
     return NULL;
   }
-
   metadata_entry_t * old_node = (metadata_entry_t *)((unsigned long)ptr - sizeof(metadata_entry_t));
   size_t old_size = old_node->capacity;
 
@@ -540,14 +382,4 @@ void *realloc(void *ptr, size_t size) {
     free(ptr);
     return new_ptr;
   }
-
 }
-
-
-
-
-
-
-
-
-
