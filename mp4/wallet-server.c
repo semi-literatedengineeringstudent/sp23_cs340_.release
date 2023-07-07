@@ -27,13 +27,10 @@ void *client_communication_thread(void *vptr_fd) {
     } else if (len == 0) { 
       continue;
     }
-
+    
     buffer[len] = '\0';
-    //printf("\n");
-    //printf("[%d]:   recv(): %s\n", fd, buffer);
     char * request = strtok(buffer, " ");
     if (strcmp(request, "EXIT") == 0) {
-      //printf("[%d]: socket closed, EXIT \n", fd);
       break;
     } else if (strcmp(request, "GET") == 0) {
       char* resource = strtok(buffer + 4, " ");
@@ -47,8 +44,7 @@ void *client_communication_thread(void *vptr_fd) {
       int delta = atoi(delta_char);
 
       int resource_Quantity_mod = wallet_change_resource(&wallet, resource, delta);
-      //printf("[%d]: resource: %s, count: %ld\n",fd, resource, resource_Quantity_mod);
-      
+    
       sprintf(buffer, "%d\n", resource_Quantity_mod);
       send(fd, buffer, strlen(buffer), 0);
     } else {
@@ -89,7 +85,7 @@ void create_wallet_server(int port) {
   }
   printf("listen: fd=%d is now listening for incoming connections\n", sockfd);
 
-    // continue to accept new connections forever:
+  // continue to accept new connections forever:
   while (1) {
     struct sockaddr_in client_address;
     socklen_t client_addr_len = sizeof(struct sockaddr_in);

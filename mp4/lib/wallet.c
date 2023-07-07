@@ -8,7 +8,6 @@
  */
 void wallet_init(wallet_t *wallet) {
   // Implement `wallet_init`
-  //wallet = malloc(sizeof(wallet_t));
   wallet->lock = malloc(sizeof(pthread_mutex_t));
   pthread_mutex_init(wallet->lock, NULL);
 
