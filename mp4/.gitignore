@@ -1,0 +1,13 @@
+degree
+hedgehog-simple
+gacha
+ping-pong
+test
+wallet-server
+*.o
+*.so
+
+*.DS_Store
+*.vs_code
+
+*.dSYM/*

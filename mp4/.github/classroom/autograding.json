@@ -1,0 +1,164 @@
+{
+  "tests": [
+    {
+      "name": "wallet_get - non-existant resource must return 0",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet_get - non-existant resource must return 0'",
+      "comparison": "included",
+      "timeout": 0.5,
+      "points": 1
+    },
+    {
+      "name": "wallet_change_resource - returns value returns resource count",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet_change_resource - returns value returns resource count'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 2
+    },
+    {
+      "name": "wallet_change_resource - resource count changes correctly",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet_change_resource - resource count changes correctly'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 2
+    },
+    {
+      "name": "wallet_change_resource - initial negative delta",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet_change_resource - initial negative delta'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 3
+    },
+    {
+      "name": "wallet_t structures are independent (tests multiple concurrent wallets)",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet_t structures are independent (tests multiple concurrent wallets)'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 5
+    },
+    {
+      "name": "wallet_change_resource - handles many concurrent requests",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet_change_resource - handles many concurrent requests'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 5
+    },
+    {
+      "name": "hedgehog - 10 threads",
+      "setup": "make test",
+      "run": "./test -w NoTests 'hedgehog - 10 threads'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 2
+    },
+    {
+      "name": "hedgehog - must NOT busy wait in wallet_change_resource",
+      "setup": "make test",
+      "run": "./test -w NoTests 'hedgehog - must NOT busy wait in wallet_change_resource'",
+      "comparison": "included",
+      "timeout": 0.5,
+      "points": 10
+    },
+    {
+      "name": "hedgehog - must NOT sleep wait in wallet_change_resource",
+      "setup": "make test",
+      "run": "./test -w NoTests 'hedgehog - must NOT sleep wait in wallet_change_resource'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 10
+    },
+    {
+      "name": "degree",
+      "setup": "make test",
+      "run": "./test -w NoTests 'degree'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 5
+    },
+    {
+      "name": "ping-pong",
+      "setup": "make test",
+      "run": "./test -w NoTests 'ping-pong'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 10
+    },
+    {
+      "name": "wallet-server - `GET nonexistent` returns zero",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet-server - `GET nonexistent` returns zero'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 5
+    },
+    {
+      "name": "wallet-server - `MOD` returns the correct value",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet-server - `MOD` returns the correct value'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 5
+    },
+    {
+      "name": "wallet-server - `MOD` and `GET` work together with one resource",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet-server - `MOD` and `GET` work together with one resource'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 5
+    },
+    {
+      "name": "wallet-server - `MOD` blocks request when resources are unavailable",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet-server - `MOD` blocks request when resources are unavailable'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 5
+    },
+    {
+      "name": "wallet-server - handles many concurrent connections",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet-server - handles many concurrent connections'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 5
+    },
+    {
+      "name": "wallet-server - `MOD` blocks request when resources become unavailable",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet-server - `MOD` blocks request when resources become unavailable'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 5
+    },
+    {
+      "name": "wallet-server - single connection with many requests",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet-server - single connection with many requests'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 5
+    },
+    {
+      "name": "wallet-server - concurrent connections with many requests",
+      "setup": "make test",
+      "run": "./test -w NoTests 'wallet-server - concurrent connections with many requests'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 5
+    },
+    {
+      "name": "test-grabthefork",
+      "setup": "make test",
+      "run": "./test -w NoTests 'test-grabthefork'",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 5
+    }
+  ]
+}
