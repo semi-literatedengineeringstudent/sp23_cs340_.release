@@ -12,9 +12,6 @@ void *client_thread(void *vptr) {
   HTTPRequest *req = (HTTPRequest *) malloc(sizeof(HTTPRequest));
   httprequest_read(req, fd);
 
-  char* action = (char*) calloc(sizeof(char),  (strlen(req->action) + 1));
-  strcpy(action, req->action);
-
   char* path = (char*) calloc(sizeof(char),  (strlen(req->path) + 1));
   strcpy(path, req->path);
 
@@ -56,6 +53,7 @@ void *client_thread(void *vptr) {
   char* relative_dir = "./static";
   char* full_file_path = calloc(strlen(path) + strlen(relative_dir) + 1,sizeof(char));
   sprintf(full_file_path, "./static%s", path);
+  free(path);
 
   file = fopen(full_file_path, "r");
   free(full_file_path);
@@ -77,17 +75,14 @@ void *client_thread(void *vptr) {
 
   char* full_request_begin = malloc(1024);
   sprintf(full_request_begin, "%s 200 OK\r\nContent-Length: %ld\r\nContent_Type: %s\r\n\r\n", version, fileLength, content_type);
-  
+  free(version);
   char* full_request = malloc(strlen(full_request_begin) + fileLength + 1);
   memcpy(full_request, full_request_begin, strlen(full_request_begin));
   memcpy(full_request + strlen(full_request_begin), payload, fileLength);
   full_request[(int)strlen(full_request_begin) + fileLength] = '\0';
 
   send(fd, full_request, (int)strlen(full_request_begin) + fileLength, 0);
-  
-  free(action);
-  free(version);
-  free(path);
+
   free(full_request_begin);
   free(full_request);
   free(payload);
