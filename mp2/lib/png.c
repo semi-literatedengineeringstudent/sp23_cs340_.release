@@ -128,7 +128,7 @@ size_t PNG_read(PNG *png, PNG_Chunk *chunk) {
   uint32_t crcVal = 0;
   crc32(chunk->type, strlen(chunk->type), &crcVal);
   if(chunk->len > 0) {
-    crc32(chunk->data, strlen(chunk->data), &crcVal);
+    crc32(chunk->data, chunk->len, &crcVal);
   }
   chunk->crc = crcVal;
 
@@ -180,7 +180,7 @@ size_t PNG_write(PNG *png, PNG_Chunk *chunk) {
   uint32_t crcVal = 0;
   crc32(chunk->type, strlen(chunk->type), &crcVal);
   if(chunk->len > 0) {
-    crc32(chunk->data, strlen(chunk->data), &crcVal);
+    crc32(chunk->data, chunk->len, &crcVal);
   }
   
   oldByteFile[currentSize + 8 + dataSize] = crcVal >> 24;
