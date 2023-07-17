@@ -118,7 +118,7 @@ size_t PNG_read(PNG *png, PNG_Chunk *chunk) {
   }
   chunk->type[4] = 0x00;
   if (chunk->len > 0) {
-    chunk->data = (char*) malloc((lengthToAdd  + 1) * sizeof(char));
+    chunk->data = (unsigned char*) malloc((lengthToAdd  + 1) * sizeof(char));
     for (size_t i = 0; i < lengthToAdd ; i++) {
       chunk->data[i] = currentByteFile[png->index + 8 + i];
     }
@@ -204,8 +204,6 @@ void PNG_free_chunk(PNG_Chunk *chunk) {
   if(chunk->len > 0) {
     free(chunk->data);
   }
-  
-  
   return;
 
 }

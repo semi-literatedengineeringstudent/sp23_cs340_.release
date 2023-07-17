@@ -15,7 +15,9 @@ int png_extractGIF(const char *png_filename, const char *gif_filename) {
     if (PNG_read(png, &chunk) == 0) {
       PNG_close(png);
       printf("%s", "in valid data\n");
-      return ERROR_INVALID_CHUNK_DATA;
+      //return ERROR_INVALID_CHUNK_DATA;
+      printf("%d",422);
+      return 422;
     }
     chunk_Counter = chunk_Counter + 1;
 
@@ -30,7 +32,7 @@ int png_extractGIF(const char *png_filename, const char *gif_filename) {
 
     if (strcmp(chunk.type, "uiuc") == 0) {
       getGif = 1;
-      FILE *fp = fopen(gif_filename, "w");
+      FILE *fp = fopen(gif_filename, "wb");
       fwrite(chunk.data, 1, chunk.len, fp);
       fclose(fp);
     }
@@ -41,8 +43,9 @@ int png_extractGIF(const char *png_filename, const char *gif_filename) {
   PNG_close(png);
 
   if (getGif != 1) {
-    return 255;
+    printf("%d",415);
+    return 415;
   }
-
+  printf("%d",0);
   return 0;  // Change the to a zero to indicate success, when your implementaiton is complete.
 }
