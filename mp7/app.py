@@ -14,9 +14,6 @@ def index():
 def extract_hidden_gif():
   png_file = request.files['png']
   png_file_name = png_file.filename
-
-  #with open(png_file_name, "wb") as output_file:
-   # output_file.write(png_file)
   png_file.save(png_file_name)
   file_list= os.listdir("./temp")
   file_num = 0;
@@ -29,8 +26,6 @@ def extract_hidden_gif():
   command = "./png-extractGIF" + " " + png_file_name + " " + gif_file_path
   status_code = os.system(command)
   os.remove(png_file_name)
-  print("status code is: ")
-  print(status_code)
   if (status_code == 40704):
     return "Unprocessable Content", 415
   elif(status_code == 512):
