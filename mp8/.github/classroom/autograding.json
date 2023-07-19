@@ -1,0 +1,124 @@
+{
+  "tests": [
+    {
+      "name": "test_microservice.py - test_move_up",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_move_up",
+      "comparison": "included",
+      "timeout": 0.5,
+      "points": 1
+    },
+    {
+      "name": "test_microservice.py - test_move_down",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_move_down",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 1
+    },
+    {
+      "name": "test_microservice.py - test_move_right",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_move_right",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 1
+    },
+    {
+      "name": "test_microservice.py - test_move_left",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_move_left",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 1
+    },
+    {
+      "name": "test_microservice.py - test_zoom_in",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_zoom_in",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 1
+    },
+    {
+      "name": "test_microservice.py - test_zoom_out",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_zoom_out",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 1
+    },
+    {
+      "name": "test_microservice.py - test_larger_image",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_larger_image",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 1
+    },
+    {
+      "name": "test_microservice.py - test_smaller_image",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_smaller_image",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 1
+    },
+    {
+      "name": "test_microservice.py - test_more_iterations",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_more_iterations",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 1
+    },
+    {
+      "name": "test_microservice.py - test_less_iterations",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_less_iterations",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 1
+    },
+    {
+      "name": "test_microservice.py - test_change_colormap",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_change_colormap",
+      "comparison": "included",
+      "timeout": 0.1,
+      "points": 1
+    },
+    {
+      "name": "test_microservice.py - test_cache",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_cache",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 3
+    },
+    {
+      "name": "test_microservice.py - test_cache_replay",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_cache_replay",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 3
+    },
+    {
+      "name": "test_microservice.py - test_cache_restart",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_cache_restart",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 3
+    },
+    {
+      "name": "test_microservice.py - test_cache_x_clear",
+      "setup": "",
+      "run": "pytest test_microservice.py -k test_cache_x_clear",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 3
+    }
+  ]
+}

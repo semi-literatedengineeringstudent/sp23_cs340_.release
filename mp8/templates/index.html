@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>CS 340: Mandelbrot Explorer</title>
+    <script>
+    function updateMandelbrot(func, data = undefined) {
+      document.getElementById('mandelbrot').style.display = "none";
+      document.getElementById('spinner').style.display = "inline-block";
+      document.getElementById('error').style.display = "none";
+
+      options = { method: "POST" }
+
+      if (data !== undefined) {
+        options.body = JSON.stringify(data);
+        options.headers = { 'Content-Type': 'application/json' }
+      }
+
+      fetch(`/${func}`, options)
+      .then(() => fetch("/mandelbrot"))
+      .then(async (resp) => {
+        if (resp.status != 200) {
+          throw new Error(await resp.text());
+        } else {
+          return resp.blob();
+        }
+      })
+      .then((blob) => {
+        let img = URL.createObjectURL(blob);
+        document.getElementById('mandelbrot').setAttribute('src', img);
+        document.getElementById('mandelbrot').style.display = "inline";
+        document.getElementById('spinner').style.display = "none";
+      })
+      .catch((err) => {
+        document.getElementById('error').innerHTML = err;
+        document.getElementById('error').style.display = "inline-block";
+        document.getElementById('spinner').style.display = "none";
+      })
+    }
+
+    function reset() {
+      updateMandelbrot("resetTo", {
+        colormap: "twilight_shifted",
+        real: 0.0,
+        imag: 0.0,
+        height: 3.0,
+        dim: 512,
+        iter: 64
+      })
+
+    }
+
+    function updateColorMap() {
+      let e = document.getElementById("colormap");
+      let val = e.options[e.selectedIndex].value;
+      updateMandelbrot("changeColorMap", {"colormap": val})
+    }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="text-center">
+        <h1>Mandelbrot Explorer (v3)</h1>
+        <hr>
+        <div class="mb-2">
+          Zoom:
+          <button onclick="updateMandelbrot('zoomIn');" class="btn btn-secondary">Zoom In</button>
+          <button onclick="updateMandelbrot('zoomOut');" class="btn btn-secondary">Zoom Out</button>
+          &
+          Iterations:
+          <button onclick="updateMandelbrot('moreIterations');" class="btn btn-secondary">More Iterations</button>
+          <button onclick="updateMandelbrot('lessIterations');" class="btn btn-secondary">Fewer Iterations</button>
+        </div>
+        <div class="mb-2">
+          Center:
+          <button onclick="updateMandelbrot('moveUp');" class="btn btn-secondary">Move Up</button>
+          <button onclick="updateMandelbrot('moveDown');" class="btn btn-secondary">Move Down</button>
+          or
+          <button onclick="updateMandelbrot('moveLeft');" class="btn btn-secondary">Move Left</button>
+          <button onclick="updateMandelbrot('moveRight');" class="btn btn-secondary">Move Right</button>
+        </div>
+        <div class="mb-2">
+          Canvas Size:
+          <button onclick="updateMandelbrot('largerImage');" class="btn btn-secondary">Larger</button>
+          <button onclick="updateMandelbrot('smallerImage');" class="btn btn-secondary">Smaller</button>
+        </div>
+        <div class="mb-2">
+          <button onclick="reset();" class="btn btn-secondary">Reset to Fully Zoomed Out</button>
+        </div>
+        <div class="mb-2">
+          <a href="https://matplotlib.org/stable/tutorials/colors/colormaps.html" target="_blank">ColorMap</a>:
+          <select id="colormap" onchange="updateColorMap()">
+            <option value="viridis" selected>viridis</option>
+            <option value="plasma">plasma</option>
+            <option value="inferno">inferno</option>
+            <option value="magma">magma</option>
+            <option value="cividis">cividis</option>
+            <option value="twilight">twilight</option>
+            <option value="twilight_shifted">twilight_shifted</option>
+            <option value="Pastel1">Pastel1</option>
+            <option value="Accent">Accent</option>
+            <option value="Dark2">Dark2</option>
+            <option value="tab20">tab20</option>
+          </select>
+          |
+          <a href="/all" target="_blank">View All Images Rendered</a>
+        </div>
+        <hr>
+        <div>
+          <div id="error" style="color: red; display: none"></div>
+          <div class="spinner-border" role="status" id="spinner" style="display: none;">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <img id="mandelbrot" src="/mandelbrot">
+        </div>
+      </div>      
+    </div>
+  </body>
+</html>
