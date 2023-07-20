@@ -84,63 +84,40 @@ def smallerImage():
     data = ""
     with open('dynamic_mandelbrot.json', 'r') as file_object:  
         data = json.load(file_object) 
-
-    new_data = {'dim' : round(data["dim"] * (1/1.25))}
-    for items in data:
-        if items != 'dim':
-            new_data[items] = data[items]
-
-    #data["dim"] = (data["dim"] * (1/1.25))
-
+    data["dim"] = (data["dim"] * (1/1.25))
     with open('dynamic_mandelbrot.json', 'w') as file_object:
-        json.dump(new_data, file_object)
-    return jsonify(new_data), 200
+        json.dump(data, file_object)
+    return jsonify(data), 200
 
 @app.route('/largerImage', methods=["POST"])
 def largerImage():
     data = ""
     with open('dynamic_mandelbrot.json', 'r') as file_object:  
         data = json.load(file_object) 
-
-    new_data = {'dim' : round(data["dim"] * (1.25))}
-    for items in data:
-        if items != 'dim':
-            new_data[items] = data[items]
-    
-    #data["dim"] = (data["dim"] * (1.25))
+    data["dim"] = (data["dim"] * (1.25))
     with open('dynamic_mandelbrot.json', 'w') as file_object:
-        json.dump(new_data, file_object)
-    return jsonify(new_data), 200
+        json.dump(data, file_object)
+    return jsonify(data), 200
 
 @app.route('/moreIterations', methods=["POST"])
 def moreIterations():
     data = ""
     with open('dynamic_mandelbrot.json', 'r') as file_object:  
         data = json.load(file_object) 
-
-    new_data = {'iter' : round(data["iter"] * 2)}
-    for items in data:
-        if items != 'iter':
-            new_data[items] = data[items]
-
-    #data["iter"] = int(data["iter"] * (2))
+    data["iter"] = int(data["iter"] * (2))
     with open('dynamic_mandelbrot.json', 'w') as file_object:
-        json.dump(new_data, file_object)
-    return jsonify(new_data), 200
+        json.dump(data, file_object)
+    return jsonify(data), 200
 
 @app.route('/lessIterations', methods=["POST"])
 def lessIterations():
     data = ""
     with open('dynamic_mandelbrot.json', 'r') as file_object:  
         data = json.load(file_object) 
-    new_data = {'iter' : round(data["iter"] * (1/2))}
-    for items in data:
-        if items != 'iter':
-            new_data[items] = data[items]
-    #data["iter"] = int(data["iter"] * (1/2))
+    data["iter"] = int(data["iter"] * (1/2))
     with open('dynamic_mandelbrot.json', 'w') as file_object:
-        json.dump(new_data, file_object)
-    return jsonify(new_data), 200
+        json.dump(data, file_object)
+    return jsonify(data), 200
 
 @app.route('/changeColorMap', methods=["POST"])
 def changeColorMap():
@@ -166,8 +143,6 @@ def getmandelbrot():
         
         request_png = server_url + "/mandelbrot/" + current_state["colormap"] + "/" + str(current_state["real"]) + ":" + str(current_state["imag"]) + ":" + str(current_state["height"]) + ":" + str(round(current_state["dim"])) + ":" + str(round(current_state["iter"]))
 
-        with open("request.txt", 'w') as f:
-            f.write(request_png)
         maldelbrot_png = requests.get(request_png)
         file_name = current_state["colormap"] + ":" + str(current_state["real"]) + ":" + str(current_state["imag"]) + ":" + str(current_state["height"]) + ":" + str(round(current_state["dim"])) + ":" + str(round(current_state["iter"]))+ ".png"
         temp = "temp.png"
@@ -199,9 +174,6 @@ def getmandelbrot():
     server_url = os.getenv('MANDELBROT_MICROSERVICE_URL')
 
     request_png = server_url + "/mandelbrot/" + current_state["colormap"] + "/" + str(current_state["real"]) + ":" + str(current_state["imag"]) + ":" + str(current_state["height"]) + ":" + str(round(current_state["dim"])) + ":" + str(round(current_state["iter"]))
-
-    with open("request.txt", 'w') as f:
-        f.write(request_png)
 
     maldelbrot_png = requests.get(request_png)
     file_name = current_state["colormap"] + ":" + str(current_state["real"]) + ":" + str(current_state["imag"]) + ":" + str(current_state["height"]) + ":" + str(round(current_state["dim"])) + ":" + str(round(current_state["iter"])) + ".png"
@@ -236,6 +208,12 @@ def storage():
 @app.route('/resetTo', methods=["POST"])
 def resetTo():
     new_json = request.get_json()
+    new_json['real'] = float(new_json['real'])
+    new_json['imag'] = float(new_json['imag'])
+    new_json['height'] = float(new_json['height'])
+    new_json['dim'] = round(new_json['height'])
+    new_json['iter'] = round(new_json['iter'])
+
     with open('dynamic_mandelbrot.json', 'w') as file_object:
         json.dump(new_json, file_object)
     
